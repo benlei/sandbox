@@ -12,10 +12,11 @@ jobs:
   test-parse-yaml:
     runs-on: ubuntu-latest
     steps:
+      # https://github.com/orgs/community/discussions/17956
       - name: Get Issue by title
         id: find-issue
         run: |
-          number=$(gh issue list --repo benlei/sandbox --search "Test"  --jq '.[0].number' --json 'number' -L 1)
+          number=$(gh issue list --repo benlei/sandbox --search "'Test Issue' in:title"  --jq '.[0].number' --json 'number' -L 1)
           echo "number=$number" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
