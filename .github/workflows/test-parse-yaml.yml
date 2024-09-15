@@ -15,19 +15,7 @@ jobs:
       - name: Get Issue by title
         id: issue
         run: |
-          gh api graphql --paginate -f query='
-            {
-              repository(owner: "OWNER", name: "REPO") {
-                issues(first: 1, filterBy: {title: "Foobar Issue"}) {
-                  nodes {
-                    id
-                    title
-                    body
-                    url
-                  }
-                }
-              }
-            }' --jq '.data.repository.issues.nodes[0] | {number: .number}'
+          gh issue list --repo benlei/sandbox --search "Foobar Issue" --json number -L 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
