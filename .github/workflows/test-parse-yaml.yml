@@ -15,7 +15,7 @@ jobs:
       - name: Get Issue by title
         id: issue
         run: |
-          gh issue list --repo benlei/sandbox --search "Test Issue" --json number -L 1
+          gh issue list --repo benlei/sandbox --search "Test Issue"  --jq '.[0].number' number -L 1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
