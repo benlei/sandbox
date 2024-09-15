@@ -18,4 +18,4 @@ jobs:
 
       - run: echo "$JSON"
         env:
-          JSON: ${{ steps.parse.outputs.data }}
+          JSON: ${{ fromJSON(steps.parse.outputs.data).package-json }}
