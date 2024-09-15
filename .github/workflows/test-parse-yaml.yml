@@ -26,7 +26,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const { data: { body } } = await github.issues.get({
+            const { data: { body } } = await github.rest.issues.get({
               owner: 'benlei',
               repo: 'sandbox',
               issue_number: ${{ steps.find-issue.outputs.number }}
