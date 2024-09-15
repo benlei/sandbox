@@ -13,15 +13,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get Issue by title
-        id: issue
+        id: find-issue
         run: |
-          gh issue list --repo benlei/sandbox --search "Test Issue"  --jq '.[0].number' number -L 1
+          number=$(gh issue list --repo benlei/sandbox --search "Test Issue"  --jq '.[0].number' number -L 1)
+          echo "number=$number" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Get issue body
+        id: issue
+        uses: actions/github-script@v7
+        with:
+          result-encoding: string
+          script: |
+            const { data: { body } } = await github.issues.get({
+              owner: 'benlei',
+              repo: 'sandbox',
+              issue_number: ${{ steps.find-issue.outputs.number }}
+            });
+            return body;
 
       - name: Issue Forms Body Parser
         id: parse
         uses: zentered/issue-forms-body-parser@v2.2.0
+        with:
+          body: ${{ steps.issue.outputs.result }}
 
       - run: echo "$JSON"
         env:
