@@ -1,0 +1,13 @@
+name: Test My Parser
+on:
+  push:
+  
+jobs:
+  test-parse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test Local Action - Body
+        id: test
+        uses: benlei/issue-templateless-parser@v1
+        with:
+          issue-number: 0
