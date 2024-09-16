@@ -26,3 +26,12 @@ jobs:
             In Between Field, Something is here
             Third Field, "${thirdField}"
             End of the line, ${{ github.run_id}}
+
+      - name: Test Local Action
+        uses: benlei/create-issue-templateless@v1
+        with:
+          title: "Test Issue Title"
+          update-option: patch
+          fields: |
+            Status, ${{ steps.test.outputs.status }}
+            Issue Number, ${{ steps.test.outputs.issue-number }}
