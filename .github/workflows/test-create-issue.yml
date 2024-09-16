@@ -2,8 +2,11 @@ name: Test My Create Issue
 on:
   push:
 
+permissions:
+  issues: write
+
 jobs:
-  test-parse:
+  test-upsert:
     runs-on: ubuntu-latest
     steps:
       - name: Test Local Action
