@@ -11,4 +11,3 @@ jobs:
         uses: benlei/issue-templateless-parser@v1
         with:
           issue-number: 0
-          fail-on-error: false
