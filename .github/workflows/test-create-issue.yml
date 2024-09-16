@@ -1,0 +1,25 @@
+name: Test My Create Issue
+on:
+  push:
+
+jobs:
+  test-parse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test Local Action
+        id: test
+        uses: benlei/create-issue-templateless@v1
+        env:
+          firstField: "Test Field 1"
+          secondField: "Test Field 2"
+          thirdField: "Test Field 3"
+        with:
+          title: "Test Issue Title"
+          update-option: upsert
+          fields: |
+            Hello, World!
+            First Field: "${firstField}"
+            Second Field: "${secondField}"
+            In Between Field, Something is here
+            Third Field: "${thirdField}"
+            End of the line, ${{ github.run_id}}

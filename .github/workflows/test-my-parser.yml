@@ -1,7 +1,7 @@
-name: Test My
+name: Test My Parser
 on:
   push:
-  
+
 jobs:
   test-parse:
     runs-on: ubuntu-latest
