@@ -1,6 +1,6 @@
 name: Test My Parser
 on:
-  push:
+  workflow_dispatch:
 
 jobs:
   test-parse:
