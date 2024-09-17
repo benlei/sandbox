@@ -1,6 +1,6 @@
 name: Test My Create Issue
 on:
-  push:
+  workflow_dispatch:
 
 permissions:
   issues: write
