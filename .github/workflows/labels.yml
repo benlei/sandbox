@@ -27,5 +27,5 @@ jobs:
                 name: 'srtjaws45eyu45s ujs4erujs4r6jsdr6ykjrdsykdrtylkdtysrtjaws45eyu45s ujs4erujs4r6jsdr6ykjrdsykdrtylkdty'
               }))
             } catch(e) {
-              console.log('label already exists');
+              console.log('error', e);
             }
