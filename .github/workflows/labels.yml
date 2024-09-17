@@ -1,4 +1,4 @@
-name: Test My Create Issue
+name: Labels
 on:
   push:
 
