@@ -24,7 +24,7 @@ jobs:
               console.log(await github.rest.issues.createLabel({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                name: 'another label'
+                name: 'srtjaws45eyu45s ujs4erujs4r6jsdr6ykjrdsykdrtylkdtysrtjaws45eyu45s ujs4erujs4r6jsdr6ykjrdsykdrtylkdty'
               }))
             } catch(e) {
               console.log('label already exists');
