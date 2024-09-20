@@ -6,8 +6,26 @@ permissions:
   issues: write
 
 jobs:
+  example:
+    name: adds labels
+    runs-on: ubuntu-latest
+    steps:
+      # Add labels to an issue in this repository
+      - name: Add Labels
+        id: add-labels
+        uses: issue-ops/labeler@v2
+        with:
+          action: add
+          create: true
+          issue_number: 1
+          labels: |
+            a-new-label
+            a_new_label
+            third_label
+
   test:
     runs-on: ubuntu-latest
+    if: ${{ false }}
     steps:
       - uses: actions/github-script@v7
         with:
