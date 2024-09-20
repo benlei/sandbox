@@ -16,12 +16,10 @@ jobs:
         uses: issue-ops/labeler@v2
         with:
           action: add
-          create: true
+          create: false
           issue_number: 1
           labels: |
-            a-new-label
-            a_new_label
-            third_label
+            special-label
 
   test:
     runs-on: ubuntu-latest
