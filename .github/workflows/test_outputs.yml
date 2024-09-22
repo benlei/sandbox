@@ -1,6 +1,9 @@
 name: Test Outputs
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/test_outputs.yml'
 
 permissions:
   issues: write
@@ -16,6 +19,7 @@ jobs:
           script: |
             core.setOutput('hello.world', '123');
             core.setOutput('hello.world["12345"].something-long["with.a bunch/of chars"].to-test_out some limits of outputs"', 6);
+            core.setOutput('hello.world.annotations["example.com/something"]', 'This is the actual output!');
           
       - name: Get result
-        run: echo ${{toJSON(steps.set-result.outputs)}}
+        run: echo ${{ steps.set-result.outputs['hello.world.annotations["example.com/something"]'] }}
