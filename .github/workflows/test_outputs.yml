@@ -20,6 +20,7 @@ jobs:
             core.setOutput('hello.world', '123');
             core.setOutput('hello.world["12345"].something-long["with.a bunch/of chars"].to-test_out some limits of outputs"', 6);
             core.setOutput('hello.world.annotations["example.com/Something"]', 'This is the actual output!');
+            core.setOutput('[0]', '5445123');
           
       - name: Get result
-        run: echo ${{ steps.set-result.outputs['hello.world.annotations["example.com/Something"]'] }}
+        run: echo ${{ steps.set-result.outputs['[0]'] }}
