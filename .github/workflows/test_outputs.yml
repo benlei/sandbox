@@ -1,4 +1,4 @@
-name: Labels
+name: Test Outputs
 on:
   workflow_dispatch:
 
