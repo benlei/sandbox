@@ -24,7 +24,7 @@ jobs:
         uses: mikefarah/yq@master
         with:
           cmd: |
-            yq '.foo.bar // ""' file.yaml
+            yq '.bar.baz // ""' file.yaml
             yq '.foo.bar.baz // ""' file.yaml
             
       # https://github.com/orgs/community/discussions/17956
