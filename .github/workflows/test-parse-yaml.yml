@@ -19,13 +19,13 @@ jobs:
           echo "foo: bar" > file.yaml
           echo "bar:" >> file.yaml
           echo "  baz: quz" >> file.yaml
+          cat file.yaml
         
       - name: Set foobar to cool
         uses: mikefarah/yq@master
         with:
           cmd: |
             yq '.bar.baz // ""' file.yaml
-            yq '.foo.bar.baz // ""' file.yaml
             
       # https://github.com/orgs/community/discussions/17956
       # - name: Get Issue by title
