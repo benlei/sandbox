@@ -1,8 +1,11 @@
 name: Test Parse YAML
 
 on:
-  issue_comment:
-    types: [created]
+  push:
+    paths:
+      - .github/workflows/test-parse-yaml.yml
+  # issue_comment:
+  #   types: [created]
 
 permissions:
   contents: read
@@ -12,34 +15,45 @@ jobs:
   test-parse-yaml:
     runs-on: ubuntu-latest
     steps:
+      - run: |
+          echo "foo: bar" > file.yaml
+          echo "bar:" >> file.yaml
+          echo "  baz: quz" >> file.yaml
+        
+      - name: Set foobar to cool
+        uses: mikefarah/yq@master
+        with:
+          cmd: |
+            yq '.foo.bar.baz // ""' file.yaml
+            
       # https://github.com/orgs/community/discussions/17956
-      - name: Get Issue by title
-        id: find-issue
-        run: |
-          number=$(gh issue list --repo benlei/sandbox --search "'Test Issue' in:title"  --jq '.[0].number' --json 'number' -L 1)
-          echo "number=$number" >> $GITHUB_OUTPUT
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Get Issue by title
+      #   id: find-issue
+      #   run: |
+      #     number=$(gh issue list --repo benlei/sandbox --search "'Test Issue' in:title"  --jq '.[0].number' --json 'number' -L 1)
+      #     echo "number=$number" >> $GITHUB_OUTPUT
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Get issue body
-        id: issue
-        uses: actions/github-script@v7
-        with:
-          result-encoding: string
-          script: |
-            const { data: { body } } = await github.rest.issues.get({
-              owner: 'benlei',
-              repo: 'sandbox',
-              issue_number: ${{ steps.find-issue.outputs.number }}
-            });
-            return body;
+      # - name: Get issue body
+      #   id: issue
+      #   uses: actions/github-script@v7
+      #   with:
+      #     result-encoding: string
+      #     script: |
+      #       const { data: { body } } = await github.rest.issues.get({
+      #         owner: 'benlei',
+      #         repo: 'sandbox',
+      #         issue_number: ${{ steps.find-issue.outputs.number }}
+      #       });
+      #       return body;
 
-      - name: Issue Forms Body Parser
-        id: parse
-        uses: zentered/issue-forms-body-parser@v2.2.0
-        with:
-          body: ${{ steps.issue.outputs.result }}
+      # - name: Issue Forms Body Parser
+      #   id: parse
+      #   uses: zentered/issue-forms-body-parser@v2.2.0
+      #   with:
+      #     body: ${{ steps.issue.outputs.result }}
 
-      - run: echo "$JSON"
-        env:
-          JSON: ${{ fromJSON(steps.parse.outputs.data).package-json.text }}
+      # - run: echo "$JSON"
+      #   env:
+      #     JSON: ${{ fromJSON(steps.parse.outputs.data).package-json.text }}
