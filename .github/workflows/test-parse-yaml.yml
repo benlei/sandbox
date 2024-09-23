@@ -23,9 +23,12 @@ jobs:
         
       - name: Set foobar to cool
         uses: mikefarah/yq@v4
+        id: yq
         with:
           cmd: |
             yq eval '.bar.baz' file.yaml
+
+      - run: echo ${{ steps.yq.outputs.result }}
 
             
       # https://github.com/orgs/community/discussions/17956
