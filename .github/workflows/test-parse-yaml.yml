@@ -22,7 +22,7 @@ jobs:
           cat file.yaml
         
       - name: Set foobar to cool
-        uses: mikefarah/yq@master
+        uses: mikefarah/yq@v4
         with:
           cmd: |
             yq eval '.bar.baz' file.yaml
