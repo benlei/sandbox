@@ -26,9 +26,12 @@ jobs:
         id: yq
         with:
           cmd: |
+            echo "other="$(yq eval '.a.b.c // ""' file.yaml) >> $GITHUB_OUTPUT
             yq eval '.bar.baz' file.yaml
 
       - run: echo ${{ steps.yq.outputs.result }}
+
+      - run: echo ${{ steps.yq.outputs.other }}
 
             
       # https://github.com/orgs/community/discussions/17956
