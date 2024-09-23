@@ -25,9 +25,8 @@ jobs:
         uses: mikefarah/yq@master
         with:
           cmd: |
-            yq e '.bar.baz // ""' file.yaml
+            yq eval '.bar.baz' file.yaml
 
-            yq e '.bar.baz.baz // ""' file.yaml
             
       # https://github.com/orgs/community/discussions/17956
       # - name: Get Issue by title
