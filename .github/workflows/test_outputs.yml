@@ -48,3 +48,5 @@ jobs:
       - run: echo "$DATA"
         env:
           DATA: ${{ toJSON(needs) }}
+      - run: echo "123"
+        if: ${{ contains(needs.*.result, 'success') }}
