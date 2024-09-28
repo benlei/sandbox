@@ -47,4 +47,4 @@ jobs:
     steps:
       - run: echo "$DATA"
         env:
-          DATA: ${{ join(needs.*.result, ',') }}
+          DATA: ${{ toJSON(needs) }}
