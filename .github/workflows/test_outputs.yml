@@ -41,7 +41,7 @@ jobs:
   job3:
     needs: [job1, job2]
     runs-on: ubuntu-latest
-    if: ${{ always() }}
+    if: ${{ always() && contains(needs.*.result, 'success') }}
     steps:
       - run: echo "$DATA"
         env:
