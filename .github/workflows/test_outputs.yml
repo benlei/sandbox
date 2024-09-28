@@ -25,3 +25,24 @@ jobs:
 
       - name: Output JSON
         run: echo ${{ toJSON(toJSON(steps.set-result.outputs)) }}
+
+  job1:
+    runs-on: ubuntu-latest
+    if: ${{ false }}
+    steps:
+      - run: echo hi
+
+  job2:
+    runs-on: ubuntu-latest
+    if: ${{ false }}
+    steps:
+      - run: echo hi
+
+  job3:
+    needs: [job1, job2]
+    runs-on: ubuntu-latest
+    if: ${{ always() }}
+    steps:
+      - run: echo "$DATA"
+        env:
+          DATA: ${{ join(needs.*.result, ',') }}
