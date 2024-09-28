@@ -27,12 +27,14 @@ jobs:
         run: echo ${{ toJSON(toJSON(steps.set-result.outputs)) }}
 
   job1:
+    needs: example
     runs-on: ubuntu-latest
     if: ${{ false }}
     steps:
       - run: echo hi
 
   job2:
+    needs: example
     runs-on: ubuntu-latest
     if: ${{ false }}
     steps:
