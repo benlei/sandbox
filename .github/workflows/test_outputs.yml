@@ -12,6 +12,8 @@ jobs:
   example:
     name: adds labels
     runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.set-result.outputs.aaa }}
     steps:
       - uses: actions/github-script@v7
         id: set-result
@@ -21,32 +23,14 @@ jobs:
             core.setOutput('hello.world["12345"].something-long["with.a bunch/of chars"].to-test_out some limits of outputs"', 6);
             core.setOutput('hello.world.annotations["example.com/Something"]', 'This is the actual output!');
             core.setOutput('[0]', '5445123');
-            core.setOutput('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', '5445123');
+            core.setOutput('aaa', '5445123');
 
       - name: Output JSON
-        run: echo ${{ toJSON(toJSON(steps.set-result.outputs)) }}
+        run: exit 1
 
-  job1:
-    needs: example
+  job:
+    needs: [example]
     runs-on: ubuntu-latest
-    if: ${{ false }}
+    if: ${{ always() }}
     steps:
-      - run: echo hi
-
-  job2:
-    needs: example
-    runs-on: ubuntu-latest
-    if: ${{ false }}
-    steps:
-      - run: echo hi
-
-  job3:
-    needs: [job1, job2]
-    runs-on: ubuntu-latest
-    if: ${{ always() && contains(needs.*.result, 'success') }}
-    steps:
-      - run: echo "$DATA"
-        env:
-          DATA: ${{ toJSON(needs) }}
-      - run: echo "123"
-        if: ${{ contains(needs.*.result, 'success') }}
+      - run: echo "${{ needs.example.outputs.result }}"
