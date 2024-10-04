@@ -25,6 +25,15 @@ jobs:
             core.setOutput('[0]', '5445123');
             core.setOutput('aaa', '5445123');
 
+      - name: test 1
+        if: ${{ false }}
+        id: foo
+        run: echo "a=1" >> $GITHUB_OUTPUT
+      - name: test 2
+        if: ${{ true }}
+        id: foo
+        run: echo "a=2" >> $GITHUB_OUTPUT
+      - run: echo "a is ${{ steps.foo.outputs.a }}"
       - name: Output JSON
         run: exit 1
 
