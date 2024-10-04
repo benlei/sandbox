@@ -27,13 +27,18 @@ jobs:
 
       - name: test 1
         if: ${{ false }}
-        id: foo
+        id: foo-1
         run: echo "a=1" >> $GITHUB_OUTPUT
       - name: test 2
         if: ${{ true }}
-        id: foo
+        id: foo-2
         run: echo "a=2" >> $GITHUB_OUTPUT
-      - run: echo "a is ${{ steps.foo.outputs.a }}"
+      - name: set step id
+        id: feature
+        run: echo "result=foo-2" >> $GITHUB_OUTPUT
+        
+      - run: echo "a is ${{ steps[steps.feature.outputs.result].outputs.a }}"
+      
       - name: Output JSON
         run: exit 1
 
