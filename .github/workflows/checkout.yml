@@ -1,0 +1,19 @@
+name: Test Checkout
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/checkout.yml'
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  example:
+    name: example
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: my-branch
