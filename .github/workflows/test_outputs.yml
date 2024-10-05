@@ -9,43 +9,56 @@ permissions:
   issues: write
 
 jobs:
-  example:
+  e1:
     name: adds labels
     runs-on: ubuntu-latest
     outputs:
-      result: ${{ steps.set-result.outputs.aaa }}
+      result: ${{ env.TEST }}
     steps:
-      - uses: actions/github-script@v7
-        id: set-result
-        with:
-          invalid-additional-field: 'aaa'
-          script: |
-            core.setOutput('hello.world', '123');
-            core.setOutput('hello.world["12345"].something-long["with.a bunch/of chars"].to-test_out some limits of outputs"', 6);
-            core.setOutput('hello.world.annotations["example.com/Something"]', 'This is the actual output!');
-            core.setOutput('[0]', '5445123');
-            core.setOutput('aaa', '5445123');
+      - run: echo "TEST=123" >> $GITHUB_ENV
 
-      - name: test 1
-        if: ${{ false }}
-        id: foo-1
-        run: echo "a=1" >> $GITHUB_OUTPUT
-      - name: test 2
-        if: ${{ true }}
-        id: foo-2
-        run: echo "a=2" >> $GITHUB_OUTPUT
-      - name: set step id
-        id: feature
-        run: echo "result=foo-2" >> $GITHUB_OUTPUT
-        
-      - run: echo "a is ${{ steps[steps.feature.outputs.result].outputs.a }}"
-      
-      - name: Output JSON
-        run: exit 1
-
-  job:
-    needs: [example]
+  e2:
+    needs: e1
     runs-on: ubuntu-latest
-    if: ${{ always() }}
     steps:
-      - run: echo "${{ needs.example.outputs.result }}"
+      - run: echo ${{ needs.e1.outputs.result }}
+  # example:
+  #   name: adds labels
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     result: ${{ steps.set-result.outputs.aaa }}
+  #   steps:
+  #     - uses: actions/github-script@v7
+  #       id: set-result
+  #       with:
+  #         invalid-additional-field: 'aaa'
+  #         script: |
+  #           core.setOutput('hello.world', '123');
+  #           core.setOutput('hello.world["12345"].something-long["with.a bunch/of chars"].to-test_out some limits of outputs"', 6);
+  #           core.setOutput('hello.world.annotations["example.com/Something"]', 'This is the actual output!');
+  #           core.setOutput('[0]', '5445123');
+  #           core.setOutput('aaa', '5445123');
+
+  #     - name: test 1
+  #       if: ${{ false }}
+  #       id: foo-1
+  #       run: echo "a=1" >> $GITHUB_OUTPUT
+  #     - name: test 2
+  #       if: ${{ true }}
+  #       id: foo-2
+  #       run: echo "a=2" >> $GITHUB_OUTPUT
+  #     - name: set step id
+  #       id: feature
+  #       run: echo "result=foo-2" >> $GITHUB_OUTPUT
+        
+  #     - run: echo "a is ${{ steps[steps.feature.outputs.result].outputs.a }}"
+      
+  #     - name: Output JSON
+  #       run: exit 1
+
+  # job:
+  #   needs: [example]
+  #   runs-on: ubuntu-latest
+  #   if: ${{ always() }}
+  #   steps:
+  #     - run: echo "${{ needs.example.outputs.result }}"
