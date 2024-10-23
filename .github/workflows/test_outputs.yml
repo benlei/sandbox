@@ -17,6 +17,10 @@ jobs:
     steps:
       - run: echo "TEST=123" >> $GITHUB_ENV
 
+      - run: echo ${{ env.FOO || 'abc' }}
+
+      - run: echo ${{ env.TEST || 'xyz' }}
+
   e2:
     needs: e1
     runs-on: ubuntu-latest
